@@ -5,9 +5,12 @@ dependencies {
     providedCompile "javax.servlet:javax.servlet-api:$servletVersion"
     compile project(':core')
     compile project(':rest')
+    
+    compile "org.springframework.social:spring-social-facebook:2.0.3.RELEASE"   
+    
 }
 
-war.archiveName = 'connector.war'
+war.archiveName = 'social.war'
 
 jettyRun.contextPath = 'social'
 jettyRunWar.contextPath = 'social'
