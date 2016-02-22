@@ -1,0 +1,20 @@
+apply plugin: 'war'
+apply plugin: 'jetty'
+
+dependencies {
+    providedCompile "javax.servlet:javax.servlet-api:$servletVersion"
+    compile project(':core')
+    compile project(':rest')
+}
+
+war.archiveName = 'connector.war'
+
+jettyRun.contextPath = 'social'
+jettyRunWar.contextPath = 'social'
+
+jettyRun.stopPort = 8090
+jettyRun.stopKey = 'stopKey'
+jettyRunWar.stopPort = 8090
+jettyRunWar.stopKey = 'stopKey'
+jettyStop.stopPort = 8090
+jettyStop.stopKey = 'stopKey'

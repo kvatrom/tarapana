@@ -1,0 +1,2 @@
+
+include "core", "social_webapp", "analyzer_webapp", "rest"
