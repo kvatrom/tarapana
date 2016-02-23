@@ -10,7 +10,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.endava.tarapana.core.model.TrackingEntity;
-import com.endava.tarapana.core.util.Model.EntityType;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath*:/application-context.xml" })
@@ -25,7 +24,6 @@ public class TrackingRepositoryTest {
 		trackingEntity.setLikes(100);
 		trackingEntity.setName("Tarapana Page Official");
 		trackingEntity.setRemoteId("123123123123123");
-		trackingEntity.setType(EntityType.PAGE);
 
 		trackingEntityRepository.save(trackingEntity);
 		assertNotNull(trackingEntity.getId());
@@ -34,7 +32,6 @@ public class TrackingRepositoryTest {
 
 		assertEquals("Tarapana Page Official", trackingEntity.getName());
 		assertEquals("123123123123123", trackingEntity.getRemoteId());
-		assertEquals(EntityType.PAGE, trackingEntity.getType());
 		assertEquals(100, trackingEntity.getLikes());
 	}
 
