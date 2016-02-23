@@ -6,7 +6,7 @@
 		<property name="ignoreUnresolvablePlaceholders" value="true" />
 		<property name="locations">
 			<list>
-				<value>classpath:application.properties</value>
+				<value>classpath:mongo.properties</value>
 			</list>
 		</property>
 	</bean>

@@ -1,6 +1,6 @@
 
 dependencies {
-    testCompile 'junit:junit:4.8.2'
+    testCompile 'junit:junit:4.12'
     //spring mongo, change accordingly 
     compile 'org.springframework.data:spring-data-mongodb:1.8.2.RELEASE'
     
@@ -10,4 +10,6 @@ dependencies {
     compile "org.springframework:spring-context-support:$springVersion"
     compile "org.springframework:spring-orm:$springVersion"
     compile "org.springframework:spring-aspects:$springVersion"
+    compile "org.springframework:spring-test:$springVersion"
+    //compile "junit:junit:4.8.2"
 }
