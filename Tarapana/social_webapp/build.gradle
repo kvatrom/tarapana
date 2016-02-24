@@ -1,31 +1,35 @@
-apply plugin: 'war'
-apply plugin: 'jetty'
-
-dependencies {
-    providedCompile "javax.servlet:javax.servlet-api:$servletVersion"
-    compile project(':core')
-    compile project(':rest')
-    compile "org.springframework:spring-web:$springVersion"    
-}
-
-war.archiveName = 'tarapana.war'
-
-jettyRun.contextPath = 'tarapana'
-jettyRunWar.contextPath = 'tarapana'
-
-jettyRun.stopPort = 8090
-jettyRun.stopKey = 'stopKey'
-jettyRunWar.stopPort = 8090
-jettyRunWar.stopKey = 'stopKey'
-jettyStop.stopPort = 8090
-jettyStop.stopKey = 'stopKey'
-
 buildscript {
     repositories {
-        mavenCentral()
+        maven { url "https://repo.spring.io/libs-milestone" }
     }
-    
     dependencies {
-        classpath "org.ajoberstar:grgit:${grgitVersion}"
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.3.2.RELEASE")
     }
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'spring-boot'
+
+jar {
+    baseName = 'gs-accessing-facebook'
+    version =  '0.1.0'
+}
+
+repositories {
+    mavenCentral()
+    maven { url "https://repo.spring.io/libs-milestone" }
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+dependencies {
+    compile("org.springframework.boot:spring-boot-starter-thymeleaf")
+    compile("org.springframework.social:spring-social-facebook")
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.3'
 }
