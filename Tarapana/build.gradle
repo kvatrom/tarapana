@@ -9,7 +9,15 @@ allprojects {
     }
 
     dependencies {
-        testCompile 'junit:junit:4.8.2'
+        testCompile "junit:junit:$junitVersion"
+        testCompile "org.springframework:spring-test:$springVersion"  
+        // Logging
+        // jcl-over-slf4j used to bridge Spring's commons-logging to slf4j
+        compile "org.slf4j:jcl-over-slf4j:$slf4jVersion"
+        compile "ch.qos.logback:logback-classic:$logbackVersion"
     }
-
+    
+    configurations {
+        all*.exclude group: 'commons-logging'
+    }
 }

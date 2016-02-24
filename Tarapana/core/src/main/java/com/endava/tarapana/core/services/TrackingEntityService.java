@@ -6,12 +6,12 @@ import com.endava.tarapana.core.model.TrackingEntity;
 
 public interface TrackingEntityService {
 
-	public TrackingEntity getTrackingEntity(String fbPageStatsId);
+	public TrackingEntity getTrackingEntity(String trackingEntityId);
 
 	public List<TrackingEntity> getAllTrackingEntities();
 
-	public TrackingEntity addTrackingEntity(TrackingEntity fbPageStats);
+	public TrackingEntity addTrackingEntity(TrackingEntity trackingEntity);
 
-	public void removeTrackingEntity(String fbPageStatsId);
+	public void removeTrackingEntity(String trackingEntityId);
 
 }

@@ -10,8 +10,8 @@ public class TrackingEntityServiceImpl implements TrackingEntityService {
 	TrackingEntityRepository trackingEntityRepository;
 
 	@Override
-	public TrackingEntity getTrackingEntity(String fbPageStatsId) {
-		return trackingEntityRepository.findOne(fbPageStatsId);
+	public TrackingEntity getTrackingEntity(String trackingEntityId) {
+		return trackingEntityRepository.findOne(trackingEntityId);
 	}
 
 	@Override
@@ -20,13 +20,13 @@ public class TrackingEntityServiceImpl implements TrackingEntityService {
 	}
 
 	@Override
-	public TrackingEntity addTrackingEntity(TrackingEntity fbPageStats) {
-		return trackingEntityRepository.save(fbPageStats);
+	public TrackingEntity addTrackingEntity(TrackingEntity trackingEntity) {
+		return trackingEntityRepository.save(trackingEntity);
 	}
 
 	@Override
-	public void removeTrackingEntity(String fbPageStatsId) {
-		TrackingEntity fbPageStats = trackingEntityRepository.findOne(fbPageStatsId);
+	public void removeTrackingEntity(String trackingEntityId) {
+		TrackingEntity fbPageStats = trackingEntityRepository.findOne(trackingEntityId);
 		if (fbPageStats != null) {
 			trackingEntityRepository.delete(fbPageStats);
 		}
