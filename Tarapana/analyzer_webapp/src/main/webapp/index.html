@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html ng-app=tarapanaApp>
+<head>
+
+<script src="lib/js/jquery-1.9.1.min.js"></script>
+<script src="lib/js/bootstrap.min.js"></script>
+<script src="lib/js/angular.min.js"></script>
+<script src="lib/js/jquery-ui.min.js"></script>
+<script src="lib/js/d3.min.js"></script>
+<script src="lib/js/nv.d3.min.js"></script>
+<script src="lib/js/angular-resource.min.js"></script>
+<script src="lib/js/angular-route.min.js"></script>
+<script src="lib/js/angular-nvd3.min.js"></script>
+
+<script src="app/js/app.js"></script>
+<script src="app/js/controllers.js"></script>
+<script src="app/js/services.js"></script>
+
+<title>Social Analyzer</title>
+
+<link href="lib/css/bootstrap.min.css" rel="stylesheet">
+<link href="lib/css/jquery-ui.min.css" rel="stylesheet">
+<link href="lib/css/nv.d3.min.css" rel="stylesheet">
+</head>
+<body>
+	<div ng-app='tarapanaApp'>
+		<div ng-controller='myCtrl'>
+			<nvd3 options='options' data='data'></nvd3>
+		</div>
+	</div>
+</body>
+</html>

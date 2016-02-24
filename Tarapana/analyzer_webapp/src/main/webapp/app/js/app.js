@@ -1,0 +1,1 @@
+angular.module('tarapanaApp', ['tarapanaApp.controllers', 'ngRoute', 'ngResource']);
