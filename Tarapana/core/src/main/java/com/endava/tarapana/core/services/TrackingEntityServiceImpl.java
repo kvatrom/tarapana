@@ -2,6 +2,9 @@ package com.endava.tarapana.core.services;
 
 import java.util.List;
 
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Order;
+
 import com.endava.tarapana.core.model.TrackingEntity;
 import com.endava.tarapana.core.repository.TrackingEntityRepository;
 
@@ -15,8 +18,13 @@ public class TrackingEntityServiceImpl implements TrackingEntityService {
 	}
 
 	@Override
-	public List<TrackingEntity> getAllTrackingEntities() {
-		return trackingEntityRepository.findAll();
+	public List<TrackingEntity> getAllTrackingEntities(String propertyNameToSort) {
+		if (propertyNameToSort != null) {
+			return trackingEntityRepository.findAll(new Sort(new Order(propertyNameToSort)));
+		}
+		else {
+			return trackingEntityRepository.findAll();
+		}
 	}
 
 	@Override

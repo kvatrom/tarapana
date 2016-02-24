@@ -28,7 +28,7 @@ public class TrackingEntityResource {
 
 	@RequestMapping(method = RequestMethod.GET)
 	public @ResponseBody List<Data> getAllEntities() {// test only remove
-		List<TrackingEntity> allTrackingEntities = trackingEntityService.getAllTrackingEntities();
+		List<TrackingEntity> allTrackingEntities = trackingEntityService.getAllTrackingEntities("likes");
 		for (TrackingEntity trackingEntity : allTrackingEntities) {
 			trackingEntityService.removeTrackingEntity(trackingEntity.getId());
 		}
@@ -45,14 +45,7 @@ public class TrackingEntityResource {
 		}
 		Data data = new Data();
 		data.setKey("Nesto ja napravio onako");
-		List<LabelValue> values = new ArrayList<LabelValue>();
-		for (TrackingEntity trackingEntity : allTrackingEntities) {
-			LabelValue value = new LabelValue();
-			value.setLabel(trackingEntity.getName());
-			value.setValue(trackingEntity.getLikes());
-			values.add(value);
-		}
-		data.setValues(values);
+		data.setValues(allTrackingEntities);
 		List<Data> datas = new ArrayList<Data>();
 		datas.add(data);
 		return datas;

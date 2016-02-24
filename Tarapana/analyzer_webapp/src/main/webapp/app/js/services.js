@@ -5,22 +5,22 @@ angular.module('tarapanaApp.controllers').controller('myCtrl',
 				$scope.options = {
 					chart : {
 						type : 'discreteBarChart',
-						height : 450,
+						height : 800,
 						margin : {
 							top : 20,
 							right : 20,
 							bottom : 60,
-							left : 55
+							left : 85
 						},
 						x : function(d) {
-							return d.label;
+							return d.name;
 						},
 						y : function(d) {
-							return d.value;
+							return d.likes;
 						},
 						showValues : true,
 						valueFormat : function(d) {
-							return d3.format(',.4f')(d);
+							return d3.format('d')(d);
 						},
 						transitionDuration : 500,
 						xAxis : {
@@ -28,7 +28,7 @@ angular.module('tarapanaApp.controllers').controller('myCtrl',
 						},
 						yAxis : {
 							axisLabel : 'Stranica',
-							axisLabelDistance : 30
+							axisLabelDistance : 50
 						}
 					}
 				};

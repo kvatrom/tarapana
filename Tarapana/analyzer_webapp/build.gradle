@@ -11,6 +11,7 @@ war.archiveName = 'analyze.war'
 jettyRun.contextPath = 'analyze'
 jettyRunWar.contextPath = 'analyze'
 
+httpPort = 9000
 jettyRun.stopPort = 8090
 jettyRun.stopKey = 'stopKey'
 jettyRunWar.stopPort = 8090

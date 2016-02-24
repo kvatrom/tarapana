@@ -8,10 +8,10 @@ public interface TrackingEntityService {
 
 	public TrackingEntity getTrackingEntity(String trackingEntityId);
 
-	public List<TrackingEntity> getAllTrackingEntities();
-
 	public TrackingEntity addTrackingEntity(TrackingEntity trackingEntity);
 
 	public void removeTrackingEntity(String trackingEntityId);
+
+	List<TrackingEntity> getAllTrackingEntities(String propertyNameToSort);
 
 }

@@ -2,10 +2,12 @@ package com.endava.tarapana.rest.api;
 
 import java.util.List;
 
+import com.endava.tarapana.core.model.TrackingEntity;
+
 public class Data {
 	private String key;
 
-	private List<LabelValue> values;
+	private List<TrackingEntity> values;
 
 	public String getKey() {
 		return key;
@@ -15,11 +17,11 @@ public class Data {
 		this.key = key;
 	}
 
-	public List<LabelValue> getValues() {
+	public List<TrackingEntity> getValues() {
 		return values;
 	}
 
-	public void setValues(List<LabelValue> values) {
+	public void setValues(List<TrackingEntity> values) {
 		this.values = values;
 	}
 
