@@ -6,6 +6,8 @@
    
    <mvc:annotation-driven/>
    
+   <bean id="exceptionMapper" class="com.endava.tarapana.exception.ExceptionMapper" />
+   
    <!-- REST Services -->
     <bean id="trackingEntityResource" class="com.endava.tarapana.rest.api.TrackingEntityResource">
         <property name="trackingEntityService" ref="trackingEntityService" />                               
