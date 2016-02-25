@@ -1,7 +1,5 @@
 package com.endava.tarapana.social_webapp;
 
-import java.util.ArrayList;
-
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
@@ -45,11 +43,11 @@ public class HelloController {
 		PagedList<Account> pageList = facebook.pageOperations().getAccounts();
 
 		if (pageList != null && !pageList.isEmpty()) {
-			PagedList<Account> pagesToTrack = (PagedList<Account>) new ArrayList<Account>();
-			System.out.println("Ima strana");
+			PagedList<Account> pagesToTrack = pageList;
+			logger.debug("Ima strana");
 			for (Account page : pagesToTrack) {
-				if (facebook.pageOperations().isPageAdmin(page.getId())) {
-					pagesToTrack.add(page);
+				if (!facebook.pageOperations().isPageAdmin(page.getId())) {
+					pagesToTrack.remove(page);
 				}
 			}
 			if (pagesToTrack != null && !pagesToTrack.isEmpty()) {
@@ -64,7 +62,7 @@ public class HelloController {
 			logger.warn("User " + user.getFirstName() + " " + user.getLastName() + " doesn't have any related pages.");
 		}
 
-		return "hello";
+		return "/connect/hello";
 	}
 
 }
