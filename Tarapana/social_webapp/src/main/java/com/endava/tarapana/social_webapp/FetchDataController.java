@@ -17,20 +17,21 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.endava.tarapana.model.UserInfo;
 import com.endava.tarapana.util.TrackingEntityUtility;
 
 @Controller
 @RequestMapping("/")
-public class HelloController {
+public class FetchDataController {
 
-	private static final Logger logger = LoggerFactory.getLogger(HelloController.class);
+	private static final Logger logger = LoggerFactory.getLogger(FetchDataController.class);
 
 	private Facebook facebook;
 
 	private ConnectionRepository connectionRepository;
 
 	@Inject
-	public HelloController(Facebook facebook, ConnectionRepository connectionRepository) {
+	public FetchDataController(Facebook facebook, ConnectionRepository connectionRepository) {
 		this.facebook = facebook;
 		this.connectionRepository = connectionRepository;
 	}
@@ -81,26 +82,26 @@ public class HelloController {
 							postLikesCount++;
 							String postLikeId = reference.getId();
 							System.out.println("PostLikeId: " + postLikeId);
-
 							try {
 								User userWhoLikedPost = facebook.userOperations().getUserProfile(postLikeId);
-								String userWhoLikedPostName = userWhoLikedPost.getFirstName();
-								System.out.println(userWhoLikedPostName);
-								String userWhoLikedPostBirthday = userWhoLikedPost.getBirthday();
-								System.out.println(userWhoLikedPostBirthday);
-								String userWhoLikedPostGender = userWhoLikedPost.getGender();
-								System.out.println(userWhoLikedPostGender);
+								UserInfo userInfo = new UserInfo();
+								userInfo.setFirstName(userWhoLikedPost.getFirstName());
+								System.out.println(userInfo.getFirstName());
+								userInfo.setBirthday(userWhoLikedPost.getBirthday());
+								System.out.println(userInfo.getBirthday());
+								userInfo.setGender(userWhoLikedPost.getGender());
+								System.out.println(userInfo.getGender());
 								// String userWhoLikedPostEducation = userWhoLikedPost.getEducation();
-								String userWhoLikedPostHomeTown = userWhoLikedPost.getHometown().getName();
-								System.out.println(userWhoLikedPostHomeTown);
-								String userWhoLikedPostLastName = userWhoLikedPost.getLastName();
-								System.out.println(userWhoLikedPostLastName);
-								String userWhoLikedPostPolitical = userWhoLikedPost.getPolitical();
-								System.out.println(userWhoLikedPostPolitical);
-								String userWhoLikedPostRelationship = userWhoLikedPost.getRelationshipStatus();
-								System.out.println(userWhoLikedPostRelationship);
-								String userWhoLikedPostReligion = userWhoLikedPost.getReligion();
-								System.out.println(userWhoLikedPostReligion);
+								// String userWhoLikedPostHomeTown = userWhoLikedPost.getHometown().getName();
+								// System.out.println(userWhoLikedPostHomeTown);
+								userInfo.setLastName(userWhoLikedPost.getLastName());
+								System.out.println(userInfo.getLastName());
+								userInfo.setPoliticalAffiliation(userWhoLikedPost.getPolitical());
+								System.out.println(userInfo.getPoliticalAffiliation());
+								userInfo.setRelationshipStatus(userWhoLikedPost.getRelationshipStatus());
+								System.out.println(userInfo.getRelationshipStatus());
+								userInfo.setReligion(userWhoLikedPost.getReligion());
+								System.out.println(userInfo.getReligion());
 
 							}
 							catch (Exception e) {
