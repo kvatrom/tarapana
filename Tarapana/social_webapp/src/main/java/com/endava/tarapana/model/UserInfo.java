@@ -11,8 +11,6 @@ public class UserInfo {
 
 	private String gender;
 
-	private String politicalAffiliation;
-
 	private String relationshipStatus;
 
 	public String getId() {
@@ -55,14 +53,6 @@ public class UserInfo {
 
 	public void setGender(String gender) {
 		this.gender = gender;
-	}
-
-	public String getPoliticalAffiliation() {
-		return politicalAffiliation;
-	}
-
-	public void setPoliticalAffiliation(String politicalAffiliation) {
-		this.politicalAffiliation = politicalAffiliation;
 	}
 
 	public String getRelationshipStatus() {

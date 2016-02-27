@@ -1,5 +1,7 @@
 package com.endava.tarapana.social_webapp;
 
+import java.util.ArrayList;
+
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
@@ -17,8 +19,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.endava.tarapana.json_response_data_holders.NumberOfLikes;
+import com.endava.tarapana.model.PageInfo;
+import com.endava.tarapana.model.PostInfo;
 import com.endava.tarapana.model.UserInfo;
-import com.endava.tarapana.util.TrackingEntityUtility;
+import com.endava.tarapana.util.PageInfoUtility;
 
 @Controller
 @RequestMapping("/")
@@ -42,93 +47,147 @@ public class FetchDataController {
 			return "redirect:/connect/facebook";
 		}
 
-		User user = facebook.userOperations().getUserProfile();
-		model.addAttribute("facebookProfile", user);
-		PagedList<Account> pageList = facebook.pageOperations().getAccounts();
+		logger.info("data fetching started.");
+		ArrayList<PageInfo> pages = getPages(facebook.pageOperations().getAccounts());
+		logger.info("data fetching done.");
 
-		if (pageList != null && !pageList.isEmpty()) {
-			PagedList<Account> pagesToTrack = pageList;
-			logger.debug("Ima strana");
-			System.out.println("########################PAGES#####################");
-			for (Account pageAccount : pagesToTrack) {
-				if (!facebook.pageOperations().isPageAdmin(pageAccount.getId())) {
-					pagesToTrack.remove(pageAccount);
-				}
-				else {
-					Page page = facebook.pageOperations().getPage(pageAccount.getId());
-					String pageName = page.getName();
-					System.out.println("PageName: " + pageName);
-					Integer pageLikeNumber = page.getLikes();
-					System.out.println("PageLikeNumber: " + pageLikeNumber);
-					String pageMembers = page.getMembers();
-					System.out.println("PageMembers: " + pageMembers);
-					Integer pageNewLikesNumber = page.getNewLikeCount();
-					System.out.println("pageNewLikesNumber: " + pageNewLikesNumber);
-					Integer pageTalkingAboutNumber = page.getTalkingAboutCount();
-					System.out.println("PageTalkingAboutNumber: " + pageTalkingAboutNumber);
-
-					Facebook facebookPage = facebook.pageOperations().facebookOperations(pageAccount.getId());
-					PagedList<Post> pagePosts = facebookPage.feedOperations().getFeed();
-					System.out.println("#############POSTS################");
-					for (Post pagePost : pagePosts) {
-						String pagePostName = pagePost.getName();
-						System.out.println("PostName: " + pagePostName);
-						String pagePostMessage = pagePost.getMessage();
-						System.out.println("PagePostMessage: " + pagePostMessage);
-						PagedList<Reference> pagePostLikes = facebookPage.likeOperations().getLikes(pagePost.getId());
-						System.out.println("##############LIKES###################");
-						Integer postLikesCount = 0;
-						for (Reference reference : pagePostLikes) {
-							postLikesCount++;
-							String postLikeId = reference.getId();
-							System.out.println("PostLikeId: " + postLikeId);
-							try {
-								User userWhoLikedPost = facebook.userOperations().getUserProfile(postLikeId);
-								UserInfo userInfo = new UserInfo();
-								userInfo.setFirstName(userWhoLikedPost.getFirstName());
-								System.out.println(userInfo.getFirstName());
-								userInfo.setBirthday(userWhoLikedPost.getBirthday());
-								System.out.println(userInfo.getBirthday());
-								userInfo.setGender(userWhoLikedPost.getGender());
-								System.out.println(userInfo.getGender());
-								// String userWhoLikedPostEducation = userWhoLikedPost.getEducation();
-								// String userWhoLikedPostHomeTown = userWhoLikedPost.getHometown().getName();
-								// System.out.println(userWhoLikedPostHomeTown);
-								userInfo.setLastName(userWhoLikedPost.getLastName());
-								System.out.println(userInfo.getLastName());
-								userInfo.setPoliticalAffiliation(userWhoLikedPost.getPolitical());
-								System.out.println(userInfo.getPoliticalAffiliation());
-								userInfo.setRelationshipStatus(userWhoLikedPost.getRelationshipStatus());
-								System.out.println(userInfo.getRelationshipStatus());
-								userInfo.setReligion(userWhoLikedPost.getReligion());
-								System.out.println(userInfo.getReligion());
-
-							}
-							catch (Exception e) {
-								// post is not liked by user
-							}
-
-						}
-						System.out.println("postLikesTotalCount: " + postLikesCount);
-					}
-					System.out.println(pageAccount.getName());
-					System.out.println(pageAccount.getAccessToken());
-					System.out.println("###################END PAGE#####################");
-				}
-			}
-			if (pagesToTrack != null && !pagesToTrack.isEmpty()) {
-				TrackingEntityUtility.storeTrackingEntities(pagesToTrack);
-			}
-			else {
-				logger.warn("User " + user.getFirstName() + " " + user.getLastName()
-						+ " doesn't have any administrated pages.");
-			}
-		}
-		else {
-			logger.warn("User " + user.getFirstName() + " " + user.getLastName() + " doesn't have any related pages.");
-		}
+		PageInfoUtility.storePageInfo(pages);
 
 		return "/connect/hello";
 	}
 
+	private ArrayList<PageInfo> getPages(PagedList<Account> pages) {
+		if (pages == null) {
+			throw new IllegalArgumentException();
+		}
+		if (pages.size() == 0) {
+			logger.info("User has no pages with admin privileges");
+		}
+
+		ArrayList<PageInfo> result = new ArrayList<PageInfo>();
+
+		for (Account pageAccount : pages) {
+			Page page = facebook.pageOperations().getPage(pageAccount.getId());
+			Facebook facebookPage = facebook.pageOperations().facebookOperations(pageAccount.getId());
+
+			PageInfo pageInfo = getPageInfo(page);
+			pageInfo.setFeed(getFeed(facebookPage));
+
+			result.add(pageInfo);
+		}
+		return result;
+	}
+
+	private ArrayList<PostInfo> getFeed(Facebook facebookPage) {
+		if (facebookPage == null) {
+			logger.warn("facebook page variable is null");
+			throw new IllegalArgumentException();
+		}
+
+		ArrayList<PostInfo> result = new ArrayList<PostInfo>();
+		PagedList<Post> pagePosts = facebookPage.feedOperations().getFeed();
+
+		if (pagePosts.size() == 0) {
+			logger.info("Page has no posts yet.");
+		}
+
+		for (Post post : pagePosts) {
+			PostInfo postInfo = new PostInfo();
+
+			System.out.println("Post id: " + post.getId());
+			System.out.println("Post created time: " + post.getCreatedTime());
+			System.out.println("Post content: " + post.getMessage());
+
+			postInfo.setContent(post.getMessage());
+			postInfo.setCreatedTime(post.getCreatedTime());
+			postInfo.setId(post.getId());
+			postInfo.setLikes(getPostLikes(postInfo.getId()));
+
+			result.add(postInfo);
+		}
+		return result;
+	}
+
+	private ArrayList<UserInfo> getPostLikes(String postId) {
+		if (postId == null || postId == "") {
+			logger.warn("postId is null or empty string.");
+			throw new IllegalArgumentException();
+		}
+
+		PagedList<Reference> postLikes = facebook.likeOperations().getLikes(postId);
+		ArrayList<UserInfo> result = new ArrayList<UserInfo>();
+
+		for (Reference reference : postLikes) {
+			User user;
+			// try {
+			// user = facebook.userOperations().getUserProfile(reference.getId());
+			// }
+			// catch (UncategorizedApiException e) {
+			// // like is not from user, its probably from some page
+			// break;
+			// }
+			user = facebook.userOperations().getUserProfile(reference.getId());
+			UserInfo userinfo = new UserInfo();
+
+			System.out.println("User id: " + user.getId());
+			System.out.println("User name: " + user.getName());
+			System.out.println("User lastName: " + user.getLastName());
+			System.out.println("User gender: " + user.getGender());
+			System.out.println("User birthday: " + user.getBirthday());
+			System.out.println("User relationship: " + user.getRelationshipStatus());
+			System.out.println("User religion: " + user.getReligion());
+
+			userinfo.setId(user.getId());
+			userinfo.setFirstName(user.getFirstName());
+			userinfo.setLastName(user.getLastName());
+			userinfo.setGender(user.getGender());
+			userinfo.setBirthday(user.getBirthday());
+			userinfo.setRelationshipStatus(user.getRelationshipStatus());
+			userinfo.setReligion(user.getReligion());
+
+			result.add(userinfo);
+		}
+
+		return result;
+	}
+
+	private PageInfo getPageInfo(Page page) {
+		if (page == null) {
+			logger.warn("page variable is null.");
+			throw new IllegalArgumentException();
+		}
+
+		PageInfo pageInfo = new PageInfo();
+
+		System.out.println("Page name: " + page.getName());
+		System.out.println("Page id: " + page.getId());
+		System.out.println("Page link: " + page.getLink());
+
+		String[] options = { "likes" };
+		String url = createUrl(page.getId(), options);
+		NumberOfLikes nol = facebook.restOperations().getForObject(url, NumberOfLikes.class);
+
+		pageInfo.setId(page.getId());
+		pageInfo.setName(page.getName());
+		pageInfo.setNumberOfLikes(nol.getLikes());
+
+		return pageInfo;
+	}
+
+	private String createUrl(String id, String[] options) {
+		if (id == null || id == "" || options.length < 1) {
+			throw new IllegalArgumentException();
+		}
+
+		StringBuilder sb = new StringBuilder();
+		sb.append(facebook.getBaseGraphApiUrl());
+		sb.append("/" + id + "?fields=");
+		for (String option : options) {
+			sb.append(option + ",");
+		}
+
+		sb.deleteCharAt(sb.length() - 1);
+
+		return sb.toString();
+	}
 }

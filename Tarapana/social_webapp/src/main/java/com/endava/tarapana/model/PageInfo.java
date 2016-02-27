@@ -1,5 +1,7 @@
 package com.endava.tarapana.model;
 
+import java.util.ArrayList;
+
 public class PageInfo {
 	private String id;
 
@@ -7,7 +9,7 @@ public class PageInfo {
 
 	private int numberOfLikes;
 
-	private int numberOfTalkingAbout;
+	private ArrayList<PostInfo> feed;
 
 	public String getId() {
 		return id;
@@ -33,11 +35,11 @@ public class PageInfo {
 		this.numberOfLikes = numberOfLikes;
 	}
 
-	public int getNumberOfTalkingAbout() {
-		return numberOfTalkingAbout;
+	public ArrayList<PostInfo> getFeed() {
+		return feed;
 	}
 
-	public void setNumberOfTalkingAbout(int numberOfTalkingAbout) {
-		this.numberOfTalkingAbout = numberOfTalkingAbout;
+	public void setFeed(ArrayList<PostInfo> feed) {
+		this.feed = feed;
 	}
 }
