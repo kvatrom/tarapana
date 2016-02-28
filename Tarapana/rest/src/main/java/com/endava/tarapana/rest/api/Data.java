@@ -2,12 +2,12 @@ package com.endava.tarapana.rest.api;
 
 import java.util.List;
 
-import com.endava.tarapana.core.model.TrackingEntity;
+import com.endava.tarapana.core.model.PageInfo;
 
 public class Data {
 	private String key;
 
-	private List<TrackingEntity> values;
+	private List<PageInfo> values;
 
 	public String getKey() {
 		return key;
@@ -17,11 +17,11 @@ public class Data {
 		this.key = key;
 	}
 
-	public List<TrackingEntity> getValues() {
+	public List<PageInfo> getValues() {
 		return values;
 	}
 
-	public void setValues(List<TrackingEntity> values) {
+	public void setValues(List<PageInfo> values) {
 		this.values = values;
 	}
 

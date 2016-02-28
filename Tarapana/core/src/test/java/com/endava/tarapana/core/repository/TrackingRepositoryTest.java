@@ -9,21 +9,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.endava.tarapana.core.model.TrackingEntity;
+import com.endava.tarapana.core.model.PageInfo;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath*:/application-context.xml" })
 public class TrackingRepositoryTest {
 
 	@Autowired
-	TrackingEntityRepository trackingEntityRepository;
+	PageInfoRepository trackingEntityRepository;
 
 	@Test
 	public void addTrackingEntitySimple() {
-		TrackingEntity trackingEntity = new TrackingEntity();
-		trackingEntity.setLikes(100);
+		PageInfo trackingEntity = new PageInfo();
 		trackingEntity.setName("Tarapana Page Official");
-		trackingEntity.setRemoteId("123123123123123");
 
 		trackingEntityRepository.save(trackingEntity);
 		assertNotNull(trackingEntity.getId());
@@ -31,15 +29,13 @@ public class TrackingRepositoryTest {
 		trackingEntity = trackingEntityRepository.findOne(trackingEntity.getId());
 
 		assertEquals("Tarapana Page Official", trackingEntity.getName());
-		assertEquals("123123123123123", trackingEntity.getRemoteId());
-		assertEquals(100, trackingEntity.getLikes());
 	}
 
-	public TrackingEntityRepository getTrackingEntityRepository() {
+	public PageInfoRepository getTrackingEntityRepository() {
 		return trackingEntityRepository;
 	}
 
-	public void setTrackingEntityRepository(TrackingEntityRepository trackingEntityRepository) {
+	public void setTrackingEntityRepository(PageInfoRepository trackingEntityRepository) {
 		this.trackingEntityRepository = trackingEntityRepository;
 	}
 

@@ -9,8 +9,8 @@
    <bean id="exceptionMapper" class="com.endava.tarapana.exception.ExceptionMapper" />
    
    <!-- REST Services -->
-    <bean id="trackingEntityResource" class="com.endava.tarapana.rest.api.TrackingEntityResource">
-        <property name="trackingEntityService" ref="trackingEntityService" />                               
+    <bean id="pageInfoResource" class="com.endava.tarapana.rest.api.PageInfoResource">
+        <property name="pageInfoService" ref="pageInfoService" />                               
     </bean> 
    
 
