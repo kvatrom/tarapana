@@ -6,6 +6,7 @@ import javax.inject.Inject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.social.UncategorizedApiException;
 import org.springframework.social.connect.ConnectionRepository;
 import org.springframework.social.facebook.api.Account;
 import org.springframework.social.facebook.api.Facebook;
@@ -119,14 +120,14 @@ public class FetchDataController {
 
 		for (Reference reference : postLikes) {
 			User user;
-			// try {
-			// user = facebook.userOperations().getUserProfile(reference.getId());
-			// }
-			// catch (UncategorizedApiException e) {
-			// // like is not from user, its probably from some page
-			// break;
-			// }
-			user = facebook.userOperations().getUserProfile(reference.getId());
+			try {
+				user = facebook.userOperations().getUserProfile(reference.getId());
+			}
+			catch (UncategorizedApiException e) {
+				// like is not from user, its probably from some page
+				break;
+			}
+
 			UserInfo userinfo = new UserInfo();
 
 			System.out.println("User id: " + user.getId());
