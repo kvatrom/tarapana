@@ -6,6 +6,7 @@ import javax.inject.Inject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.social.UncategorizedApiException;
 import org.springframework.social.connect.ConnectionRepository;
 import org.springframework.social.facebook.api.Account;
@@ -36,6 +37,9 @@ public class FetchDataController {
 
 	private ConnectionRepository connectionRepository;
 
+	@Autowired
+	private PageInfoUtility pageInfoUtility;
+
 	@Inject
 	public FetchDataController(Facebook facebook, ConnectionRepository connectionRepository) {
 		this.facebook = facebook;
@@ -52,7 +56,7 @@ public class FetchDataController {
 		ArrayList<PageInfo> pages = getPages(facebook.pageOperations().getAccounts());
 		logger.info("data fetching done.");
 
-		PageInfoUtility.storePageInfo(pages);
+		pageInfoUtility.storePageInfo(pages);
 
 		return "/connect/hello";
 	}
