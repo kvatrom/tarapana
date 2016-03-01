@@ -6,7 +6,7 @@
    
    <mvc:annotation-driven/>
    
-   <bean id="exceptionMapper" class="com.endava.tarapana.exception.ExceptionMapper" />
+   <bean id="exceptionMapper" class="com.endava.tarapana.rest.exception.ExceptionMapper" />
    
    <!-- REST Services -->
     <bean id="pageInfoResource" class="com.endava.tarapana.rest.api.PageInfoResource">
