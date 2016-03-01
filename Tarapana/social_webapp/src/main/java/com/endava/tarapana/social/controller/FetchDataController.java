@@ -1,4 +1,4 @@
-package com.endava.tarapana.social_webapp;
+package com.endava.tarapana.social.controller;
 
 import java.util.ArrayList;
 
@@ -6,6 +6,7 @@ import javax.inject.Inject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.social.UncategorizedApiException;
 import org.springframework.social.connect.ConnectionRepository;
 import org.springframework.social.facebook.api.Account;
@@ -20,11 +21,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.endava.tarapana.json_response_data_holders.NumberOfLikes;
-import com.endava.tarapana.model.PageInfo;
-import com.endava.tarapana.model.PostInfo;
-import com.endava.tarapana.model.UserInfo;
-import com.endava.tarapana.util.PageInfoUtility;
+import com.endava.tarapana.social.model.NumberOfLikes;
+import com.endava.tarapana.social.model.PageInfo;
+import com.endava.tarapana.social.model.PostInfo;
+import com.endava.tarapana.social.model.UserInfo;
+import com.endava.tarapana.social.service.PageInfoRestService;
 
 @Controller
 @RequestMapping("/")
@@ -35,6 +36,9 @@ public class FetchDataController {
 	private Facebook facebook;
 
 	private ConnectionRepository connectionRepository;
+
+	@Autowired
+	private PageInfoRestService pageInfoRestService;
 
 	@Inject
 	public FetchDataController(Facebook facebook, ConnectionRepository connectionRepository) {
@@ -52,7 +56,7 @@ public class FetchDataController {
 		ArrayList<PageInfo> pages = getPages(facebook.pageOperations().getAccounts());
 		logger.info("data fetching done.");
 
-		PageInfoUtility.storePageInfo(pages);
+		pageInfoRestService.storePageInfo(pages);
 
 		return "/connect/hello";
 	}

@@ -1,4 +1,4 @@
-package com.endava.tarapana.model;
+package com.endava.tarapana.social.model;
 
 public class UserInfo {
 	private String id;
