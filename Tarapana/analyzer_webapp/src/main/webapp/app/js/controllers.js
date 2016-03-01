@@ -1,7 +1,7 @@
-angular.module('tarapanaApp.controllers', [ 'nvd3' ]).factory('pageService',
+angular.module('app').factory('pageService',
 		function($resource) {
 
-			return $resource('service/tracking-entities', {}, {
+			return $resource('service/pageInfo', {}, {
 				getPages : {
 					method : 'GET',
 					isArray : true

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app=tarapanaApp>
+<html ng-app=app>
 <head>
 
 <script src="lib/js/jquery-1.9.1.min.js"></script>
@@ -23,8 +23,8 @@
 <link href="lib/css/nv.d3.min.css" rel="stylesheet">
 </head>
 <body>
-	<div ng-app='tarapanaApp'>
-		<div ng-controller='myCtrl'>
+	<div ng-app='app'>
+		<div ng-controller='chartController'>
 			<nvd3 options='options' data='data'></nvd3>
 		</div>
 	</div>

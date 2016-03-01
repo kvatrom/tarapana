@@ -1,4 +1,4 @@
-angular.module('tarapanaApp.controllers').controller('myCtrl',
+angular.module('app').controller('chartController',
 		function($scope, pageService) {
 
 			$scope.loadPages = function() {
@@ -16,7 +16,7 @@ angular.module('tarapanaApp.controllers').controller('myCtrl',
 							return d.name;
 						},
 						y : function(d) {
-							return d.likes;
+							return d.numberOfLikes;
 						},
 						showValues : true,
 						valueFormat : function(d) {

@@ -1,1 +1,1 @@
-angular.module('tarapanaApp', ['tarapanaApp.controllers', 'ngRoute', 'ngResource']);
+angular.module('app', ['ngRoute', 'ngResource', 'nvd3']);
