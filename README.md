@@ -14,7 +14,7 @@
 
 - Enable Git Repositories view: `Windows -> Show View -> Other... -> Git Repositories`
 - Disable SSL verification: `Team -> Git -> Configuration -> Add Entry` and add key `http.sslVerify` with value `false` 
-- Clone a Git Repository `https://github.com/kvatrom/tarapana.git` to the local repository folder (e.g. `.../git/java/connector`)
+- Clone a Git Repository `https://github.com/kvatrom/tarapana.git` to the local repository folder (e.g. `.../git/java/tarapana`)
 
 ### Preferences
 
