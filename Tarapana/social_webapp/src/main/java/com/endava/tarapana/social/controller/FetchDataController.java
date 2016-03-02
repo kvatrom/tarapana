@@ -21,12 +21,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.endava.tarapana.social.model.LikesResponse;
 import com.endava.tarapana.social.model.NumberOfLikesResponse;
 import com.endava.tarapana.social.model.PageInfo;
 import com.endava.tarapana.social.model.PostInfo;
 import com.endava.tarapana.social.model.UserInfo;
-import com.endava.tarapana.social.model.UserResponse;
 import com.endava.tarapana.social.service.PageInfoRestService;
 
 @Controller
@@ -172,16 +170,6 @@ public class FetchDataController {
 		String[] options = { "likes" };
 		String url = createUrl(page.getId(), options);
 		NumberOfLikesResponse nol = facebook.restOperations().getForObject(url, NumberOfLikesResponse.class);
-
-		LikesResponse response = facebook.restOperations()
-				.getForObject(facebook.getBaseGraphApiUrl() + "/" + page.getId() + "/likes", LikesResponse.class);
-
-		System.out.println("PAGE LIKES");
-		System.out.println("Number of likes:" + response.getData().length);
-		for (UserResponse user : response.getData()) {
-			System.out.println(user.getId());
-		}
-		System.out.println("PAGE LIKES END");
 
 		pageInfo.setId(page.getId());
 		pageInfo.setUserId(facebook.userOperations().getUserProfile().getId());

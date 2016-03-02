@@ -5,13 +5,13 @@ import java.util.ArrayList;
 public class PageInfo {
 	private String id;
 
+	private String userId;
+
 	private String name;
 
 	private int numberOfLikes;
 
 	private ArrayList<PostInfo> feed;
-
-	private ArrayList<UserInfo> likes;
 
 	public String getId() {
 		return id;
@@ -45,11 +45,11 @@ public class PageInfo {
 		this.feed = feed;
 	}
 
-	public ArrayList<UserInfo> getLikes() {
-		return likes;
+	public String getUserId() {
+		return userId;
 	}
 
-	public void setLikes(ArrayList<UserInfo> likes) {
-		this.likes = likes;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 }
