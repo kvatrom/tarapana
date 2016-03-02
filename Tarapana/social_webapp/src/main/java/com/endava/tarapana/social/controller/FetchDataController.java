@@ -21,7 +21,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.endava.tarapana.social.model.NumberOfLikes;
+import com.endava.tarapana.social.model.NumberOfLikesResponse;
 import com.endava.tarapana.social.model.PageInfo;
 import com.endava.tarapana.social.model.PostInfo;
 import com.endava.tarapana.social.model.UserInfo;
@@ -121,8 +121,7 @@ public class FetchDataController {
 
 		PagedList<Reference> objectLikes = facebook.likeOperations().getLikes(objectId);
 		ArrayList<UserInfo> result = new ArrayList<UserInfo>();
-		System.out.println(objectId);
-		System.out.println(objectLikes.size());
+
 		for (Reference reference : objectLikes) {
 			User user;
 			try {
@@ -170,12 +169,31 @@ public class FetchDataController {
 
 		String[] options = { "likes" };
 		String url = createUrl(page.getId(), options);
-		NumberOfLikes nol = facebook.restOperations().getForObject(url, NumberOfLikes.class);
+		NumberOfLikesResponse nol = facebook.restOperations().getForObject(url, NumberOfLikesResponse.class);
+
+		// LikesResponse response = facebook.restOperations()
+		// .getForObject(facebook.getBaseGraphApiUrl() + "/" + page.getId() + "/likes", LikesResponse.class);
+
+		// System.out.println("---Hard way---");
+		// System.out.println("PAGE LIKES");
+		// System.out.println("Number of likes:" + response.getData().length);
+		// for (UserResponse user : response.getData()) {
+		// System.out.println(user.getId());
+		// }
+		// System.out.println("PAGE LIKES END");
+		//
+		// System.out.println("---Easy way---");
+		// System.out.println("PAGE LIKES");
+		// getObjectiLikes(page.getId());
+		// System.out.println("PAGE LIKES END");
 
 		pageInfo.setId(page.getId());
 		pageInfo.setName(page.getName());
 		pageInfo.setNumberOfLikes(nol.getLikes());
-		
+		System.out.println("!!! PAGE LIKES !!!");
+		pageInfo.setLikes(getObjectiLikes(page.getId()));
+		System.out.println("!!! PAGE LIKES END!!!");
+
 		return pageInfo;
 	}
 

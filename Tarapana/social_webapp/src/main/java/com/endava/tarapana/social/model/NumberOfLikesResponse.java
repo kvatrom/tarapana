@@ -1,6 +1,6 @@
 package com.endava.tarapana.social.model;
 
-public class NumberOfLikes {
+public class NumberOfLikesResponse {
 	private int likes;
 
 	private String id;
