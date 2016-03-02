@@ -185,6 +185,7 @@ public class FetchDataController {
 		// System.out.println("---Easy way---");
 		// System.out.println("PAGE LIKES");
 		// getObjectiLikes(page.getId());
+
 		// System.out.println("PAGE LIKES END");
 
 		pageInfo.setId(page.getId());
