@@ -58,7 +58,7 @@ public class FetchDataController {
 
 		pageInfoRestService.storePageInfo(pages);
 
-		return "/connect/hello";
+		return "/connect/facebookConnected";
 	}
 
 	private ArrayList<PageInfo> getPages(PagedList<Account> pages) {
@@ -106,23 +106,24 @@ public class FetchDataController {
 			postInfo.setContent(post.getMessage());
 			postInfo.setCreatedTime(post.getCreatedTime());
 			postInfo.setId(post.getId());
-			postInfo.setLikes(getPostLikes(postInfo.getId()));
+			postInfo.setLikes(getObjectiLikes(postInfo.getId()));
 
 			result.add(postInfo);
 		}
 		return result;
 	}
 
-	private ArrayList<UserInfo> getPostLikes(String postId) {
-		if (postId == null || postId == "") {
-			logger.warn("postId is null or empty string.");
+	private ArrayList<UserInfo> getObjectiLikes(String objectId) {
+		if (objectId == null || objectId == "") {
+			logger.warn("objectId is null or empty string.");
 			throw new IllegalArgumentException();
 		}
 
-		PagedList<Reference> postLikes = facebook.likeOperations().getLikes(postId);
+		PagedList<Reference> objectLikes = facebook.likeOperations().getLikes(objectId);
 		ArrayList<UserInfo> result = new ArrayList<UserInfo>();
-
-		for (Reference reference : postLikes) {
+		System.out.println(objectId);
+		System.out.println(objectLikes.size());
+		for (Reference reference : objectLikes) {
 			User user;
 			try {
 				user = facebook.userOperations().getUserProfile(reference.getId());
@@ -166,7 +167,6 @@ public class FetchDataController {
 
 		System.out.println("Page name: " + page.getName());
 		System.out.println("Page id: " + page.getId());
-		System.out.println("Page link: " + page.getLink());
 
 		String[] options = { "likes" };
 		String url = createUrl(page.getId(), options);
@@ -175,7 +175,7 @@ public class FetchDataController {
 		pageInfo.setId(page.getId());
 		pageInfo.setName(page.getName());
 		pageInfo.setNumberOfLikes(nol.getLikes());
-
+		
 		return pageInfo;
 	}
 
