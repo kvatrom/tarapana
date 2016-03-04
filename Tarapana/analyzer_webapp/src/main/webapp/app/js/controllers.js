@@ -78,6 +78,60 @@ angular
 									y : $scope.value[0].values[$scope.value[0].values.length - 1].numberOfNoGenderActiveLikes
 								} ];
 
+						$scope.nextChart = $scope.ageChart;
+					};
+					
+					$scope.ageChart = function() {
+						$scope.options = {
+							chart : {
+								type : 'pieChart',
+								height : 500,
+								x : function(d) {
+									return d.key;
+								},
+								y : function(d) {
+									return d.y;
+								},
+								showLabels : true,
+								duration : 500,
+								labelThreshold : 0.01,
+								labelSunbeamLayout : true,
+								legend : {
+									margin : {
+										top : 5,
+										right : 35,
+										bottom : 5,
+										left : 0
+									}
+								}
+							}
+						};
+						$scope.data = [
+								{
+									key : "Under 20",
+									y : $scope.value[0].values[$scope.value[0].values.length - 1].activeMembersUnder20
+								},
+								{
+									key : "20-30",
+									y : $scope.value[0].values[$scope.value[0].values.length - 1].activeMembersBetween20and30
+								},
+								{
+									key : "30-40",
+									y : $scope.value[0].values[$scope.value[0].values.length - 1].activeMembersBetween30and40
+								},
+								{
+									key : "40-50",
+									y : $scope.value[0].values[$scope.value[0].values.length - 1].activeMembersBetween40and50
+								},
+								{
+									key : "Over 50",
+									y : $scope.value[0].values[$scope.value[0].values.length - 1].activeMembersOver50
+								},
+								{
+									key : "No Age",
+									y : $scope.value[0].values[$scope.value[0].values.length - 1].activeMembersNoAge
+								}];
+
 						$scope.nextChart = $scope.allPagesLikesChart;
 					};
 
