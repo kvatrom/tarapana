@@ -1,44 +1,10 @@
-angular.module('app').controller('chartController',
-		function($scope, pageService) {
+angular.module('app').factory('pageService',
+		function($resource) {
 
-			$scope.loadPages = function() {
-				$scope.options = {
-					chart : {
-						type : 'discreteBarChart',
-						height : 800,
-						margin : {
-							top : 20,
-							right : 20,
-							bottom : 60,
-							left : 85
-						},
-						x : function(d) {
-							return d.name;
-						},
-						y : function(d) {
-							return d.numberOfLikes;
-						},
-						showValues : true,
-						valueFormat : function(d) {
-							return d3.format('d')(d);
-						},
-						transitionDuration : 500,
-						xAxis : {
-							axisLabel : 'Kolicina lajkova'
-						},
-						yAxis : {
-							axisLabel : 'Stranica',
-							axisLabelDistance : 50
-						}
-					}
-				};
-				pageService.getPages().$promise.then(function(value) {
-					$scope.data = value;
-				},
-
-				function(error) {
-					$scope.data = error;
-				});
-			};
-			$scope.loadPages();
+			return $resource('service/pageInfo', {}, {
+				getPages : {
+					method : 'GET',
+					isArray : true
+				}
+			});
 		});

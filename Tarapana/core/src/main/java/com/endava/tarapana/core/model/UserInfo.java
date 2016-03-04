@@ -70,4 +70,12 @@ public class UserInfo {
 	public void setReligion(String religion) {
 		this.religion = religion;
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (!(obj instanceof UserInfo)) {
+			return false;
+		}
+		return ((UserInfo) obj).getId().equals(this.getId());
+	}
 }
