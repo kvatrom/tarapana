@@ -67,15 +67,15 @@ angular
 						$scope.data = [
 								{
 									key : "Male",
-									y : $scope.value[0].values[$scope.value[0].values.length - 1].numberOfMaleActiveLikes
+									y : 57
 								},
 								{
 									key : "Female",
-									y : $scope.value[0].values[$scope.value[0].values.length - 1].numberOfFemaleActiveLikes
+									y : 42
 								},
 								{
 									key : "NoGender",
-									y : $scope.value[0].values[$scope.value[0].values.length - 1].numberOfNoGenderActiveLikes
+									y : 1
 								} ];
 
 						$scope.nextChart = $scope.ageChart;
@@ -109,27 +109,27 @@ angular
 						$scope.data = [
 								{
 									key : "Under 20",
-									y : $scope.value[0].values[$scope.value[0].values.length - 1].activeMembersUnder20
+									y : 11
 								},
 								{
 									key : "20-30",
-									y : $scope.value[0].values[$scope.value[0].values.length - 1].activeMembersBetween20and30
+									y : 57
 								},
 								{
 									key : "30-40",
-									y : $scope.value[0].values[$scope.value[0].values.length - 1].activeMembersBetween30and40
+									y : 17
 								},
 								{
 									key : "40-50",
-									y : $scope.value[0].values[$scope.value[0].values.length - 1].activeMembersBetween40and50
+									y : 9
 								},
 								{
 									key : "Over 50",
-									y : $scope.value[0].values[$scope.value[0].values.length - 1].activeMembersOver50
+									y : 4
 								},
 								{
 									key : "No Age",
-									y : $scope.value[0].values[$scope.value[0].values.length - 1].activeMembersNoAge
+									y : 2
 								}];
 
 						$scope.nextChart = $scope.allPagesLikesChart;
